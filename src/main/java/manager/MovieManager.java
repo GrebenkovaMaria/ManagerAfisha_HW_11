@@ -13,6 +13,13 @@ public class MovieManager {
 
     private Movie[] movies = new Movie[0];
 
+
+    private int numberOfLast = 10;
+    public MovieManager(int numberOfLast) {
+        this.numberOfLast = numberOfLast;
+    }
+
+
     public void add(Movie movie) {
         int length = movies.length + 1;
         Movie[] tmp = new Movie[length];
@@ -22,8 +29,16 @@ public class MovieManager {
         movies = tmp;
     }
 
-    public Movie[] getAll() {
-        Movie[] result = new Movie[movies.length];
+
+    public Movie[] getLastAdded() {
+        int length;
+        if (this.numberOfLast > movies.length) {
+            length = movies.length ;
+        } else {
+            length = Math.min(this.numberOfLast, movies.length);
+        }
+        Movie [] result = new Movie[length] ;
+        //Movie[] result = new Movie[movies.length];
         // перебираем массив в прямом порядке
         // но кладём в результаты в обратном
         for (int i = 0; i < result.length; i++) {
@@ -31,21 +46,6 @@ public class MovieManager {
             result[i] = movies[index];
         }
         return result;
-    }
-
-    // наивная реализация
-    public void removeById(int id) {
-        int length = movies.length - 1;
-        Movie[] tmp = new Movie[length];
-        int index = 0;
-        for (Movie movie : movies) {
-            if (movie.getId() != id) {
-                tmp[index] = movie;
-                index ++;
-            }
-        }
-        // меняем наши элементы
-        movies = tmp;
     }
 }
 
